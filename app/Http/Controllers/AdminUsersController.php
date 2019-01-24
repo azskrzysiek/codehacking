@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 
 use App\Http\Requests\UsersRequest;
+
 use App\Http\Requests\UsersEditRequest;
 use App\User;
 use App\Role;
