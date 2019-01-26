@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 
@@ -15,7 +17,9 @@ class PostCommentsController extends Controller
      */
     public function index()
     {
-        return view('admin.comments.index');
+        $comments = Comment::all();
+
+        return view('admin.comments.index',compact('comments'));
     }
 
     /**
@@ -36,7 +40,23 @@ class PostCommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = Auth::user();
+
+        $data = [
+            'post_id' => $request->post_id,
+            'author' => $user->name,
+            'email' => $user->email,
+            'photo' =>$user->photo->file,
+            'body' =>$request->body,
+        ];
+
+        Comment::create($data);
+
+        $request->session()->flash('comment_message','Twoj komentarz zostal dodany i czeka na autoryzacje');
+
+        return redirect()->back();
+
     }
 
     /**
