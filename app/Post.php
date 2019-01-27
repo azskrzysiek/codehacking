@@ -3,9 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Cviebrock\EloquentSluggable\SluggableInterface;
 
-class Post extends Model
+class Post extends Model implements SluggableInterface
 {
+
+    use SluggableTrait;
+
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to' => 'slug',
+        'on_update' => true,
+    ];
+
     protected $fillable = [
         'user_id',
         'category_id',
@@ -30,6 +41,6 @@ class Post extends Model
     }
     public function comments()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Comment');
     }
 }

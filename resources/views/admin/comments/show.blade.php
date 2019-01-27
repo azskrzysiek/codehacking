@@ -27,7 +27,6 @@
                 <td>{{$comment->email}}</td>
                 <td>{{$comment->body}}</td>
                 <td><a href="{{route('home.post',$comment->post->id)}}">Zobacz post</a></td>
-                <td><a href="{{route('admin.comment.replies.show',$comment->id)}}">Zobacz odpowiedzi</a></td>
 
                 <td>
                   @if($comment->is_active == 1)
