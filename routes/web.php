@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout' );
 
 
 
@@ -39,7 +39,7 @@ Route::group(['middleware'=>'admin'], function()
 
     ]]);
 
-    Route::get('/post/{id}', ['as'=>'home.post','uses'=>'AdminPostsController@post']);
+    Route::get('/post/{id}', ['as'=>'home.post','uses'=>'HomeController@post']);
 
     Route::resource('admin/categories','AdminCategoriesController',['names' =>[
 
@@ -77,14 +77,9 @@ Route::group(['middleware'=>'admin'], function()
         'show' => 'admin.comment.replies.show',
     ]]);
 
-    Route::get('/admin', function(){
-
-        return view('admin.index');
-    });
+    Route::get('/admin', 'AdminController@index');
 });
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware'=>'auth'], function()
 {
